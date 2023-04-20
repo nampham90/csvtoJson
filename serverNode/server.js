@@ -215,8 +215,8 @@ async function insert1000Records(row, i) {
 
 function sendEmail(sgMail,emailTo,linktaifilesql){
   const msg = {
-    to: 'pv_nam@brycen.com.vn', // Change to your recipient
-    from: 'pv_nam@brycen.com.vn', // Change to your verified sender
+    to: '', // Change to your recipient
+    from: '', // Change to your verified sender
     subject: 'Sending with SendGrid is Fun',
     text: 'and easy to do anywhere, even with Node.js',
     html: `<strong>noi dung</strong>
@@ -562,8 +562,8 @@ var codeCon = false;
 var con = mysql.createConnection({
     host: "34.84.33.242",//34.84.33.242
     port: "3306",
-    user: "wms",
-    password: "wmspass",
+    user: "",
+    password: "",
     database: "aer"
   });
 //INSERT INTO `aer`.`tsm180_jpzipmst` (`TYPE`, `ZIP`, `BASECD`, `SORTINGCODE`, `PREFCD`, `MUNICIPALITYCD`, `TOWNAREACD`, `CITYBLOCCD`, `AREAADDCHARGEFLG`, `SEASONALCHARGEFLG`, `ISLANDFLG`, `DELIVDISTANCE`, `DELIVERABLEFLG`, `IMPENDATETIME`) 
