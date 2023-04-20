@@ -1,0 +1,80 @@
+<h1>
+    Upload TSM180
+</h1>
+<!-- nzAction="http://localhost:4500/wellcome" -->
+<nz-upload
+      [nzHeaders]="{ authorization: 'authorization-csv'}"
+      [nzAccept]="'.CSV'"
+      (nzChange)="handleChange($event)"
+    >
+      <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        Click to Upload
+      </button>
+</nz-upload>
+<br>
+<ng-container *ngIf="isLoading">
+    <nz-spin nzSimple></nz-spin>
+</ng-container>
+<!-- {{ jsondatadisplay }} -->
+<ng-container *ngIf="!isLoading">
+  <table class="table" >
+    <button nz-button nzType="primary" [disabled]="isUpload" (click)="uploadServer()">Upload Download File</button>
+    Total:{{records.length}}
+    <thead class="thead-dark">
+      <!-- <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Zip</th>
+        <th scope="col">Basecd</th>
+        <th scope="col">sortingcode</th>
+        <th scope="col">prefcd</th>
+        <th scope="col">municipalitycd</th>
+        <th scope="col">citybloccd</th>
+        <th scope="col">areaaddchargeflg</th>
+        <th scope="col">seasonalchargeflg</th>
+        <th scope="col">islandflg</th>
+        <th scope="col">delivdistance</th>
+        <th scope="col">deliverableflg</th>
+      </tr> -->
+    </thead>
+    <!-- <tbody>
+      <tr *ngFor="let record of recordss; let i = index">
+        <th scope="row">{{ record.type }}</th>
+        <td>{{ record.zip }}</td>
+        <td>{{ record.basecd }}</td>
+        <td>{{ record.sortingcode }}</td>
+        <td>{{ record.prefcd }}</td>
+        <td>{{ record.municipalitycd }}</td>
+        <td>{{ record.townareacd }}</td>
+        <td>{{ record.citybloccd }}</td>
+        <td>{{ record.areaaddchargeflg }}</td>
+        <td>{{ record.seasonalchargeflg }}</td>
+        <td>{{ record.islandflg }}</td>
+        <td>{{ record.delivdistance }}</td>
+        <td>{{ record.deliverableflg }}</td>
+      </tr>
+    </tbody> -->
+  </table>
+  
+</ng-container>
+<!-- <ng-container *ngIf="listReponse">
+  <nz-table 
+  #rowSelectionTable
+  nzShowPagination
+  nzShowSizeChanger
+  [nzData]="listReponse">
+    <thead>
+      <tr>
+        <th>Vitri</th>
+        <th>Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of listReponse">
+        <td>{{ data.vitritieptheo }}</td>
+        <td>{{ data.code }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</ng-container> -->
+  

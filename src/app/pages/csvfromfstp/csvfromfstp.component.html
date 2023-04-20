@@ -1,0 +1,167 @@
+
+<div nz-row>
+    <div nz-col [nzSpan]="12" [nzPush]="12">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <h1> Connect Server Fstp </h1> 
+            <div nz-col [nzSpan]="24" class="search-area">
+                <ng-container *ngIf="isShowLogout">
+                    <button nz-button nzType="primary" (click)="logoutServerFstp()">Logout</button>
+                </ng-container>
+            </div>
+        </div>
+        <form nz-form [nzAutoTips]="autoTips" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>IP</nz-form-label>
+              <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+                <input nz-input formControlName="ip" placeholder="198.168.23.1" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>Port</nz-form-label>
+              <nz-form-control [nzSpan]="12">
+                <input nz-input formControlName="port" placeholder="22" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>Account</nz-form-label>
+              <nz-form-control [nzSpan]="12">
+                <input nz-input formControlName="account" placeholder="hu_tu" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                  <input nz-input formControlName="password" placeholder="@123456a@" type="password" />
+                </nz-form-control>
+              </nz-form-item>
+            <nz-form-item>
+              <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                <button nz-button nzType="primary" [nzLoading]="isLoadingForm">Submit</button>
+                <span>{{message}}</span>
+              </nz-form-control>
+            </nz-form-item>
+        </form>
+        <ng-container *ngIf="isShowAddressFile">
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzNoColon]="true" [nzXXl]="5" [nzXl]="5" [nzLg]="5" [nzMd]="5" [nzSm]="24" [nzXs]="24">Address file</nz-form-label>
+                        <nz-form-control [nzXXl]="19" [nzXl]="19" [nzLg]="19" [nzMd]="19" [nzSm]="24" [nzXs]="24">
+                            <input type="text" nz-input [(ngModel)]="addressfile" placeholder="/home/hu_tu/PVNAM/JP (pvnam).zip"/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzNoColon]="true" [nzXXl]="5" [nzXl]="5" [nzLg]="5" [nzMd]="5" [nzSm]="24" [nzXs]="24">File name</nz-form-label>
+                        <nz-form-control [nzXXl]="19" [nzXl]="19" [nzLg]="19" [nzMd]="19" [nzSm]="24" [nzXs]="24">
+                            <input type="text" nz-input [(ngModel)]="fileName" placeholder="pvnam"/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzSpan]="24" class="search-area">
+                    <button nz-button nzType="primary" (click)="downlowdFileZip()" [nzLoading]="isDownloadFile">Download File From Fstp</button>
+                    <span>{{msgDownloalFstp}}</span>
+                </div>
+            </div>
+            <ng-container *ngIf="listFileLocal.length > 0">
+                <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                    <h2>{{msgDownloalFstp}}</h2>
+                </div>
+                <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                    <div>
+                        <ul nz-list [nzDataSource]="listFileLocal" nzBordered nzSize="large">
+                            <nz-list-header>List File</nz-list-header>
+                            <li nz-list-item *ngFor="let item of listFileLocal" nzNoFlex>
+                              <ul nz-list-item-actions>
+                                <nz-list-item-action>
+                                  <a (click)="DeleteFile()">Delete</a>
+                                </nz-list-item-action>
+                              </ul>
+                              {{ item }}
+                            </li>
+                            <nz-list-footer>Danh sách file</nz-list-footer>
+                        </ul>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div nz-col [nzSpan]="12" [nzPull]="12">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <h1> Download file sql từ Server Local </h1>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                    <nz-form-label [nzXXl]="4" [nzXl]="4" [nzLg]="4" [nzMd]="4" [nzSm]="24" [nzXs]="24" [nzNoColon]="true">Header CSV</nz-form-label>
+                    <nz-form-control [nzXXl]="16" [nzXl]="16" [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXs]="24">
+                        <nz-select
+                        [(ngModel)]="selectedValue"
+                        [compareWith]="compareFn"
+                        (ngModelChange)="log($event)"
+                        nzAllowClear
+                      >
+                        <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                   <nz-form-label [nzXXl]="4" [nzXl]="4" [nzLg]="4" [nzMd]="4" [nzSm]="24" [nzXs]="24" [nzNoColon]="true">Table name</nz-form-label>
+                   <nz-form-control  [nzXXl]="16" [nzXl]="16" [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXs]="24">
+                       <input type="text" nz-input [(ngModel)]="tableName" placeholder="Name table"/>
+                   </nz-form-control>
+               </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                    <nz-form-label [nzNoColon]="true" [nzXXl]="4" [nzXl]="4" [nzLg]="4" [nzMd]="4" [nzSm]="24" [nzXs]="24">Address file CSV</nz-form-label>
+                    <nz-form-control [nzXXl]="16" [nzXl]="16" [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXs]="24">
+                        <input type="text" nz-input [(ngModel)]="addressfilecsv" placeholder="dist/unicorn-JP/ZIPSIWAKE.CSV"/>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                    <nz-form-label [nzNoColon]="true" [nzXXl]="3" [nzXl]="3" [nzLg]="3" [nzMd]="3" [nzSm]="24" [nzXs]="24">List Field</nz-form-label>
+                    <nz-form-control [nzXXl]="18" [nzXl]="18" [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXs]="24">
+                        <textarea rows="4" nz-input placeholder="vd:TYPE,ZIP,BASECD,SORTINGCODE,PREFCD,MUNICIPALITYCD,TOWNAREACD,CITYBLOCCD,AREAADDCHARGEFLG,SEASONALCHARGEFLG,ISLANDFLG,DELIVDISTANCE,DELIVERABLEFLG" [(ngModel)]="listField"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                   <nz-form-label [nzXXl]="4" [nzXl]="4" [nzLg]="4" [nzMd]="4" [nzSm]="24" [nzXs]="24" [nzNoColon]="true">Email Người Nhận</nz-form-label>
+                   <nz-form-control  [nzXXl]="16" [nzXl]="16" [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXs]="24">
+                       <input type="text" nz-input [(ngModel)]="emailTo" placeholder="Email"/>
+                   </nz-form-control>
+               </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+            <div nz-col [nzSpan]="24" class="search-area">
+                <button nz-button nzType="primary" (click)="downlowdFileSql()" [nzLoading]="isDownloadFilesql">Download File Sql</button>
+                <span>{{messagedownloadsql}}</span>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+
+
+
